@@ -1,0 +1,28 @@
+{
+  "name": "twowaychat-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JTaisey389/TwoWayChat-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JTaisey389/TwoWayChat-test/issues"
+  },
+  "homepage": "https://github.com/JTaisey389/TwoWayChat-test#readme",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "http": "^0.0.1-security",
+    "nodemon": "^2.0.7",
+    "repl": "^0.1.3",
+    "socket.io": "^4.1.2",
+    "socket.io-client": "^4.1.2"
+  }
+}
