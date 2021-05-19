@@ -6,7 +6,7 @@ require('dotenv').config();
 const mongoDB = process.env.MONGODB;
 const http = require('http').createServer();
 const io = require('socket.io')(http);
-const PORT = 3000;
+const PORT = process.env.PORT || 'https://code401-people-helping-people.herokuapp.com/';
 
 let users = [];
 
