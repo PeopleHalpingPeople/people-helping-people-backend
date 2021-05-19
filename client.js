@@ -26,7 +26,7 @@ socket.on('message', (data) => {
 
 socket.on('private message', (data) => {
   const { User_Message, username } = data;
-  // console.log(username, users[username])
+  console.log(username, users[username])
   console.log(chalk.green(username + ':' + User_Message.split('\n')[0]));
 });
 
@@ -38,7 +38,7 @@ repl.start({
     let regex1 = /(\S+\w+\s+){2}/gm; //grabs /w Jason
     let regex1string = User_Message.match(regex1);
   
-    let privateReceiver = regex1string[0].split(' ')[1].toUpperCase();
+    let privateReceiver = regex1string[0].split(' ')[1];
     
     let messageConstructor = User_Message.split(' ');
     let messageType = messageConstructor[0];
@@ -54,8 +54,10 @@ repl.start({
 
     if(messageType === '/to'){
       socket.emit('private message', { User_Message, privateReceiver, messageType })
-    };
-    socket.emit('message', { User_Message, username});
+    } else {
+      socket.emit('message', { User_Message, username});
+    }
+      
   }
 })
 
