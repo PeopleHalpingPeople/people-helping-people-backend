@@ -34,10 +34,19 @@ repl.start({
   prompt: '',
   eval: (User_Message) => {
  // add a conditional for regular message or private message
-    if(User_Message)
+
+    let regex1 = /(\S+\w+\s+){2}/gm; //grabs /w Jason
+    let regex1string = regex1.test(User_Message);
+    let regex2 = /\B\W\S/gm; // grabs just /w
+    let messageType = regex2.test(regex1string);
+    let regex3 = /[A-Z]+\w+\w/gm // grabs just the name
+    let privateUser = regex3.test(regex1string);
+
+
+    if(messageType === '/w'){
+      socket.emit('private message', { User_Message, privateUser, messageType })
+    };
     socket.emit('message', { User_Message, username});
-    socket.emit('private message', { User_Message, username, messageType }); // third parameter is the person we need to send it too
-    
   }
 })
 
