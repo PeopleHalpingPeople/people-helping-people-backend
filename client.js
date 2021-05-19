@@ -26,7 +26,7 @@ socket.on('message', (data) => {
 
 socket.on('private message', (data) => {
   const { User_Message, username } = data;
-  // console.log(username, users[username])
+  console.log(username)
   console.log(chalk.green(username + ':' + User_Message.split('\n')[0]));
 });
 
@@ -46,18 +46,18 @@ repl.start({
       privateReceiver = regex1string[0].split(' ')[1];
     }
     
-    console.log('messageConstructor---', messageConstructor);
-    console.log('User Message', User_Message);
-    console.log('regex1string---', regex1string);
-    console.log('messageType---', messageType);
-    console.log('privateReceiver---', privateReceiver);
+    // console.log('messageConstructor---', messageConstructor);
+    // console.log('User Message', User_Message);
+    // console.log('regex1string---', regex1string);
+    // console.log('messageType---', messageType);
+    // console.log('privateReceiver---', privateReceiver);
     console.log('sender username ---', username);
 
     
 
 
     if(messageType === '/to'){
-      socket.emit('private message', { User_Message, privateReceiver, messageType })
+      socket.emit('private message', { username, User_Message, privateReceiver, messageType })
     } else {
       socket.emit('message', { User_Message, username});
     }
