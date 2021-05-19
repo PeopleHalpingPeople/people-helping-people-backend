@@ -1,20 +1,32 @@
 'use strict'
 
-// TODO: Install dependencies, npm i http socket.io
+const mongoose = require('mongoose');
+const Chat = require('./chat-schema.js');
+const mongoDB = 'mongodb+srv://user1:mongoATLAS1@cluster0.eleyp.mongodb.net/peopleHelping?retryWrites=true&w=majority';
 const http = require('http').createServer();
 const io = require('socket.io')(http);
 const PORT = 3000;
 
 let users = [];
 
+mongoose.connect(mongoDB, { useNewParser: true, useUnifiedTopology: true }).then(() => {
+  console.log('mongoDB is connected');
+}).catch(err => console.log(err));
+
 http.listen(PORT, () => {
   console.log(`server is up on http://localhost:${PORT}`)
 })
 
 io.on('connection', (socket) => {
-  socket.on('add user', (event) => {
+  // await Chat.find().then(result => {
+  //   socket.emit('output-messages', result);
+  // })
+
+  socket.on('add user', async (event) => {
     users.push(event.username); 
+    const allMessages = await Chat.find({ });
     users[event.username] = event.socketID;
+    socket.emit('message list', { currentUser: event.username, allMessages });
   })
   console.log('connected')
   socket.on('message',(event) => {
@@ -24,11 +36,16 @@ io.on('connection', (socket) => {
   });
   socket.on('private message', (event) => {
     io.to(users[event.privateReceiver]).emit('private message', event);
-    // use message type from line 46 client.js to access the users object
-    
-    // TODO add in third variable to .on private message
     console.log('PM event---', event);
     socket.emit('private message', event);
+  })
+
+  socket.on('chat message', (event) => {
+    console.log('this is event', event);
+    const message = new Chat( event );
+    message.save().then(() => {
+      io.emit('message saved to db');
+    })
   })
 });
 
