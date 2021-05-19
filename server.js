@@ -2,7 +2,8 @@
 
 const mongoose = require('mongoose');
 const Chat = require('./chat-schema.js');
-const mongoDB = 'mongodb+srv://user1:mongoATLAS1@cluster0.eleyp.mongodb.net/peopleHelping?retryWrites=true&w=majority';
+require('dotenv').config();
+const mongoDB = process.env.MONGODB;
 const http = require('http').createServer();
 const io = require('socket.io')(http);
 const PORT = 3000;
