@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
     
   });
   socket.on('private message', (event) => {
-    io.to(users['']).emit('private message', event);
+    io.to(users[event.privateReceiver]).emit('private message', event);
     // use message type from line 46 client.js to access the users object
     
     // TODO add in third variable to .on private message
