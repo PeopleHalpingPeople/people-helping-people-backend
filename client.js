@@ -1,6 +1,6 @@
 'use strict';
 
-const socket = require('socket.io-client')('http://localhost:3000');
+const socket = require('socket.io-client')(process.env.PORT || 'http://localhost:3000');
 const repl = require('repl');
 const chalk = require('chalk');
 const { argv, emit } = require('process');
