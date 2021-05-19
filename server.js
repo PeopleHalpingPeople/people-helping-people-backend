@@ -7,7 +7,6 @@ const PORT = 3000;
 
 let users = [];
 
-// Possibly change to an app.use????
 http.listen(PORT, () => {
   console.log(`server is up on http://localhost:${PORT}`)
 })
@@ -25,7 +24,9 @@ io.on('connection', (socket) => {
   });
   socket.on('private message', (event) => {
     io.to(users['']).emit('private message', event);
-    // use the third parameter to access the users object this comes from 38 client.js
+    // use message type from line 46 client.js to access the users object
+    
+    // TODO add in third variable to .on private message
     console.log(event);
     socket.emit('private message', event);
   })
