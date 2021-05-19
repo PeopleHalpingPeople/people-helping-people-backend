@@ -26,7 +26,7 @@ socket.on('message', (data) => {
 
 socket.on('private message', (data) => {
   const { User_Message, username } = data;
-  console.log(username, users[username])
+  // console.log(username, users[username])
   console.log(chalk.green(username + ':' + User_Message.split('\n')[0]));
 });
 
@@ -36,15 +36,24 @@ repl.start({
  // add a conditional for regular message or private message
 
     let regex1 = /(\S+\w+\s+){2}/gm; //grabs /w Jason
-    let regex1string = regex1.test(User_Message);
-    let regex2 = /\B\W\S/gm; // grabs just /w
-    let messageType = regex2.test(regex1string);
-    let regex3 = /[A-Z]+\w+\w/gm // grabs just the name
-    let privateUser = regex3.test(regex1string);
+    let regex1string = User_Message.match(regex1);
+  
+    let privateReceiver = regex1string[0].split(' ')[1].toUpperCase();
+    
+    let messageConstructor = User_Message.split(' ');
+    let messageType = messageConstructor[0];
+    console.log('messageConstructor---', messageConstructor);
+    console.log('User Message', User_Message);
+    console.log('regex1string---', regex1string);
+    console.log('messageType---', messageType);
+    console.log('privateReceiver---', privateReceiver);
+    console.log('sender username ---', username);
+
+    
 
 
-    if(messageType === '/w'){
-      socket.emit('private message', { User_Message, privateUser, messageType })
+    if(messageType === '/to'){
+      socket.emit('private message', { User_Message, privateReceiver, messageType })
     };
     socket.emit('message', { User_Message, username});
   }

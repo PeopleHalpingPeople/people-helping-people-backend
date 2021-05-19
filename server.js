@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
   })
   console.log('connected')
   socket.on('message',(event) => {
-    console.log(event);
+    console.log('event---', event);
     socket.broadcast.emit('message', event);
     
   });
@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
     // use message type from line 46 client.js to access the users object
     
     // TODO add in third variable to .on private message
-    console.log(event);
+    console.log('PM event---', event);
     socket.emit('private message', event);
   })
 });
