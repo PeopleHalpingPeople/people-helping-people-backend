@@ -3,6 +3,9 @@
 const socket = require('socket.io-client')(process.env.PORT || 'http://localhost:3000');
 const repl = require('repl');
 const chalk = require('chalk');
+const chalkAnimation = require('chalk-animation');
+const gradient = require('gradient-string');
+const figlet = require('figlet');
 const { argv, emit } = require('process');
 // const messages = document.getElementById('messages');
 // const msgForm = document.getElementById('msgForm');
@@ -13,8 +16,26 @@ socket.on('disconnect', () => {
 })
 
 socket.on('connect', () => {
-  console.log(chalk.red('---- Start Chatting ----'))
   username = process.argv[2];
+  let str = `Hi      ${username}!`;
+  let str2 = "---Start Chatting---"
+  const rainbow = chalkAnimation.rainbow(str, .5); 
+
+  figlet(str, function (err, data) {
+    if (err) {
+      chalkAnimation.neon('Something went wrong...');
+      console.dir(err);
+      return;
+    }
+    console.log(gradient.rainbow(data));
+    console.log(chalk.magentaBright('------------ Chat Instructions ------------'))
+    console.log(chalk.cyan('1 - Enter message to send globally'))
+    console.log(chalk.cyan('2 - Enter /to (user) to send PM'))
+    console.log(chalk.magentaBright('-------------------------------------------'))
+  });
+
+  
+  console.log(chalk.magentaBright('---------- People Helping People ----------'))
   socket.emit('add user', { username, socketID: socket.id })
 });
 
