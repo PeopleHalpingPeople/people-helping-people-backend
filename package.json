@@ -20,7 +20,10 @@
   "dependencies": {
     "bluebird": "^3.7.2",
     "chalk": "^4.1.1",
+    "chalk-animation": "^1.6.0",
     "dotenv": "^9.0.2",
+    "figlet": "^1.5.0",
+    "gradient-string": "^1.2.0",
     "http": "^0.0.1-security",
     "mongodb": "^3.6.7",
     "mongoose": "^5.12.10",
