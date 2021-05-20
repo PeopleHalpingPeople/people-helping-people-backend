@@ -7,8 +7,6 @@ const chalkAnimation = require('chalk-animation');
 const gradient = require('gradient-string');
 const figlet = require('figlet');
 const { argv, emit } = require('process');
-// const messages = document.getElementById('messages');
-// const msgForm = document.getElementById('msgForm');
 let username = null;
 
 socket.on('disconnect', () => {
@@ -18,8 +16,6 @@ socket.on('disconnect', () => {
 socket.on('connect', () => {
   username = process.argv[2];
   let str = `Hi      ${username}!`;
-  let str2 = "---Start Chatting---"
-  const rainbow = chalkAnimation.rainbow(str, .5); 
 
   figlet(str, function (err, data) {
     if (err) {
@@ -43,7 +39,7 @@ socket.on('message', (data) => {
   const { User_Message, username } = data;
   console.log(chalk.green(username + ':' + User_Message.split('\n')[0]));
   socket.emit('chat message', data)
-})
+});
 
 socket.on('private message', (data) => {
   const { User_Message, username } = data;
@@ -68,7 +64,7 @@ repl.start({
   prompt: '',
   eval: (User_Message) => {
 
-    let regex1 = /(\S+\w+\s+){2}/gm; //grabs /w Jason
+    let regex1 = /(\S+\w+\s+){2}/gm;
     let regex1string = User_Message.match(regex1);
 
     let messageConstructor = User_Message.split(' ');
@@ -84,7 +80,5 @@ repl.start({
     } else {
       socket.emit('message', { User_Message, username});
     }
-      
   }
-})
-
+});
