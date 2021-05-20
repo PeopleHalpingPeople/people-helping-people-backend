@@ -37,7 +37,7 @@ socket.on('message list', (data) => {
       console.log(chalk.green(username + ':' + User_Message.split('\n')[0]));
     } else {
       if (username === data.currentUser || data.currentUser === chatMessage.privateReceiver) {
-        console.log(chalk.green(username + ':' + User_Message.split('\n')[0]));
+        console.log(chalk.yellow(username + ':' + User_Message.split('\n')[0]));
       }
     }
   })
@@ -57,13 +57,6 @@ repl.start({
     if (messageType === '/to') {
       privateReceiver = regex1string[0].split(' ')[1];
     }
-    
-    // console.log('messageConstructor---', messageConstructor);
-    // console.log('User Message', User_Message);
-    // console.log('regex1string---', regex1string);
-    // console.log('messageType---', messageType);
-    // console.log('privateReceiver---', privateReceiver);
-    // console.log('sender username ---', username);
 
     if(messageType === '/to'){
       socket.emit('private message', { username, User_Message, privateReceiver, messageType })
