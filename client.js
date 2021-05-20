@@ -15,7 +15,7 @@ socket.on('disconnect', () => {
 
 socket.on('connect', () => {
   username = process.argv[2];
-  let str = `Hi      ${username}!`;
+  let str = `Hi     ${username}  !`;
 
   figlet(str, function (err, data) {
     if (err) {
@@ -25,8 +25,8 @@ socket.on('connect', () => {
     }
     console.log(gradient.rainbow(data));
     console.log(chalk.magentaBright('------------ Chat Instructions ------------'))
-    console.log(chalk.cyan('1 - Enter message to send globally'))
-    console.log(chalk.cyan('2 - Enter /to (user) to send PM'))
+    console.log(chalk.cyan('* Enter message to send globally'))
+    console.log(chalk.cyan('* Enter /to (user) to send PM'))
     console.log(chalk.magentaBright('-------------------------------------------'))
   });
 
