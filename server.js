@@ -19,9 +19,6 @@ http.listen(PORT, () => {
 })
 
 io.on('connection', (socket) => {
-  // await Chat.find().then(result => {
-  //   socket.emit('output-messages', result);
-  // })
 
   socket.on('add user', async (event) => {
     users.push(event.username); 
@@ -42,7 +39,6 @@ io.on('connection', (socket) => {
   })
 
   socket.on('chat message', (event) => {
-    console.log('this is event', event);
     const message = new Chat( event );
     message.save().then(() => {
       io.emit('message saved to db');
