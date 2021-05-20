@@ -10,7 +10,6 @@ let username = null;
 
 socket.on('disconnect', () => {
   console.log('disconnected');
-  // socket.emit('disconnect');
 })
 
 socket.on('connect', () => {
@@ -27,7 +26,7 @@ socket.on('message', (data) => {
 
 socket.on('private message', (data) => {
   const { User_Message, username } = data;
-  console.log(chalk.green(username + ':' + User_Message.split('\n')[0]));
+  console.log(chalk.yellow(username + ':' + User_Message.split('\n')[0]));
   socket.emit('chat message', data)
 });
 
