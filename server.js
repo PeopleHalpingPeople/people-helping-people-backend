@@ -28,22 +28,30 @@ io.on('connection', (socket) => {
   })
   console.log('connected')
   socket.on('message',(event) => {
+    const message = new Chat( event );
+    message.save().then(() => {
+      io.emit('message saved to db');
+    })
     console.log('event---', event);
     socket.broadcast.emit('message', event);
     
   });
   socket.on('private message', (event) => {
+    const message = new Chat( event );
+    message.save().then(() => {
+      io.emit('message saved to db');
+    })
     io.to(users[event.privateReceiver]).emit('private message', event);
     console.log('PM event---', event);
     socket.emit('private message', event);
   })
 
-  socket.on('chat message', (event) => {
-    const message = new Chat( event );
-    message.save().then(() => {
-      io.emit('message saved to db');
-    })
-  })
+  // socket.on('chat message', (event) => {
+  //   const message = new Chat( event );
+  //   message.save().then(() => {
+  //     io.emit('message saved to db');
+  //   })
+  // })
 });
 
 io.on('disconnect', (event) => {
