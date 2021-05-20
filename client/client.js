@@ -11,7 +11,7 @@ let username = null;
 
 socket.on('disconnect', () => {
   console.log('disconnected');
-})
+});
 
 socket.on('connect', () => {
   username = process.argv[2];
