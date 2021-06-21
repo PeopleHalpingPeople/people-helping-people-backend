@@ -28,9 +28,7 @@ const io = new Server(PORT, {cors: {origin: ['http://localhost:3001']}})
 io.on('connection', (socket) => {
   
   socket.on('add user', async (event) => {
-    console.log('NICKNAME', event);
     users.push(event.nickname); 
-    console.log('USERS', users);
     const allMessages = await Chat.find({ });
     users[event.nickname] = event.socketID;
     socket.emit('message list', { currentUser: event.nickname, allMessages });
@@ -43,7 +41,6 @@ io.on('connection', (socket) => {
     message.save().then(() => {
       io.emit('message saved to db');
     })
-    console.log('event---', event);
     socket.broadcast.emit('message', event);
     
   });
@@ -54,7 +51,6 @@ io.on('connection', (socket) => {
       io.emit('message saved to db');
     })
     io.to(users[event.privateReceiver]).emit('private message', event);
-    console.log('PM event---', event);
     socket.emit('private message', event);
   });
   
