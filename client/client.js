@@ -15,6 +15,7 @@ socket.on('disconnect', () => {
 
 socket.on('connect', () => {
   username = process.argv[2];
+  console.log('user connected TEST----');
   let str = `Hi     ${username}  !`;
 
   figlet(str, function (err, data) {
@@ -32,7 +33,7 @@ socket.on('connect', () => {
 
   
   console.log(chalk.magentaBright('---------- People Helping People ----------'))
-  socket.emit('add user', { username, socketID: socket.id })
+  // socket.emit('add user', { username, socketID: socket.id })
 });
 
 socket.on('message', (data) => {
