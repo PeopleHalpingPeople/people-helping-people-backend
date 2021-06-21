@@ -15,7 +15,6 @@ socket.on('disconnect', () => {
 
 socket.on('connect', () => {
   username = process.argv[2];
-  console.log('user connected TEST----');
   let str = `Hi     ${username}  !`;
 
   figlet(str, function (err, data) {
