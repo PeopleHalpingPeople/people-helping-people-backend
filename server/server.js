@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
     socket.emit('message list', { currentUser: event.nickname, allMessages });
   });
   console.log('connected')
-  socket.emit('TEST', 'test');
+  socket.emit('connected', 'connected');
 
   socket.on('message',(event) => {
     const message = new Chat( event );
