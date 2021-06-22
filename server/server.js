@@ -28,13 +28,13 @@ const io = new Server(PORT, {cors: {origin: ['http://localhost:3001']}})
 io.on('connection', (socket) => {
   
   socket.on('add user', async (event) => {
-    users.push(event.nickname); 
+    users.push(event.given_name); 
     const allMessages = await Chat.find({ });
-    users[event.nickname] = event.socketID;
-    socket.emit('message list', { currentUser: event.nickname, allMessages });
+    users[event.given_name] = event.socketID;
+    socket.emit('message list', { currentUser: event.given_name, allMessages });
   });
   console.log('connected')
-  socket.emit('connected', 'connected');
+  
 
   socket.on('message',(event) => {
     const message = new Chat( event );
