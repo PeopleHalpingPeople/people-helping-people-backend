@@ -25,7 +25,9 @@ mongoose.connect(mongoDB, { useNewParser: true, useUnifiedTopology: true }).then
 // });
 const io = new Server(PORT, {cors: {origin: ['http://localhost:3001']}})
 
+
 io.on('connection', (socket) => {
+  console.log('connected')
   
   socket.on('add user', async (event) => {
     users.push(event.given_name); 
@@ -33,7 +35,6 @@ io.on('connection', (socket) => {
     users[event.given_name] = event.socketID;
     socket.emit('message list', { currentUser: event.given_name, allMessages });
   });
-  console.log('connected')
   
 
   socket.on('message',(event) => {
@@ -53,10 +54,11 @@ io.on('connection', (socket) => {
     io.to(users[event.privateReceiver]).emit('private message', event);
     socket.emit('private message', event);
   });
+
+  socket.on('disconnect', (event) => {
+    console.log('user has left the chat');
+    return event;
+  });
   
 });
 
-io.on('disconnect', (event) => {
-  console.log('user has left the chat');
-  return event;
-});
