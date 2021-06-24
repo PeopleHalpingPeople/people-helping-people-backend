@@ -30,20 +30,22 @@ io.on('connection', (socket) => {
   console.log('connected')
   
   socket.on('add user', async (event) => {
-    users.push(event.given_name); 
+    console.log(event);
+    users.push(event); 
     const allMessages = await Chat.find({ });
-    users[event.given_name] = event.socketID;
-    socket.emit('message list', { currentUser: event.given_name, allMessages });
+    users[event] = event.socketID;
+    socket.emit('message list', { currentUser: event, allMessages });
   });
   
 
   socket.on('message',(event) => {
+    console.log('USER EVENT', event);
     const message = new Chat( event );
     message.save().then(() => {
       io.emit('message saved to db');
     })
-    socket.broadcast.emit('message', event);
-    
+    console.log('MESS',message);
+    socket.emit('message', message);
   });
 
   socket.on('private message', (event) => {
