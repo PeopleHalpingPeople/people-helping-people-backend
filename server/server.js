@@ -30,9 +30,10 @@ io.on('connection', (socket) => {
   console.log('connected')
   
   socket.on('add user', async (event) => {
-    console.log(event);
+    console.log('EVENT', event);
     users.push(event); 
     const allMessages = await Chat.find({ });
+    console.log('SOCKET ID', users)
     users[event] = event.socketID;
     socket.emit('message list', { currentUser: event, allMessages });
   });
@@ -54,9 +55,10 @@ io.on('connection', (socket) => {
       io.emit('message saved to db');
       console.log('message saved to DB');
     })
-    io.to(users[event.privateReceiver]).emit('private message', message);
+    console.log('EVENT', message);
+    io.to(users[message.privateReceiver]).emit('private message', message);
     console.log('privateEVENT--', message);
-    socket.emit('private message', message);
+    socket.emit('message', message);
   });
 
   socket.on('disconnect', (event) => {
