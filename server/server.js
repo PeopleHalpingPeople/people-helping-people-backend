@@ -38,7 +38,7 @@ io.on('connection', (socket) => {
   });
   
 
-  socket.on('message',(event) => {
+  socket.on('message1',(event) => {
     console.log('USER EVENT', event);
     const message = new Chat( event );
     message.save().then(() => {
@@ -52,9 +52,11 @@ io.on('connection', (socket) => {
     const message = new Chat( event );
     message.save().then(() => {
       io.emit('message saved to db');
+      console.log('message saved to DB');
     })
-    io.to(users[event.privateReceiver]).emit('private message', event);
-    socket.emit('private message', event);
+    io.to(users[event.privateReceiver]).emit('private message', message);
+    console.log('privateEVENT--', message);
+    socket.emit('private message', message);
   });
 
   socket.on('disconnect', (event) => {
