@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
     console.log('EVENT', message);
     io.to(users[message.privateReceiver]).emit('private message', message);
     console.log('privateEVENT--', message);
-    socket.emit('message', message);
+    socket.emit('private message', message);
   });
 
   socket.on('disconnect', (event) => {
